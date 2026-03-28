@@ -2,7 +2,9 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { supabase } from "../../../lib/supabase";
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+type Params = { params: { id: string } }
+
+export async function GET(_: Request, { params }: Params) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -16,7 +18,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   return NextResponse.json({ client });
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: Params) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -32,7 +34,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   return NextResponse.json({ client: data });
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_: Request, { params }: Params) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
